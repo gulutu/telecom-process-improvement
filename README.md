@@ -5,38 +5,55 @@
 ![Process Mining](https://img.shields.io/badge/Process%20Mining-bupaR-orange)
 
 This repository contains an end-to-end analysis and redesign of a Nordic telecom provider’s enterprise customer service process.  
-The project combines **process mining**, **BPMN modeling**, **agent performance analysis**, and an **AI-driven redesign**.
+The project combines **process mining**, **BPMN modeling**, **agent performance analysis**, and recommendations for a **AI-driven redesign**.
 
-> This work was completed as part of the *Systems and Process Innovation* course during the **first semester of my Master’s degree in Business Analytics at NMBU (Autumn 2023)**.
-
----
-
-## 🔍 1. Project Summary
-
-The objective of this project was to evaluate and improve the company’s customer service operations by:
-
-- Mapping the **current “as-is” process** using event logs  
-- Identifying inefficiencies, bottlenecks, and performance variation  
-- Understanding agent workload, throughput times, and topic complexity  
-- Designing a future **AI-enabled “to-be” workflow**  
-- Recommending organizational, operational, and technological changes
-
-The dataset consists of anonymized customer service event logs containing three activity types:  
-**Email, Interaction, End.**
+> This work was completed as part of the *Systems and Process Innovation* course during the **first semester (Autumn 2023) of my Master’s degree in Business Analytics at NMBU**.
 
 ---
 
-## 📊 2. Key Insights
+## Overview
 
-### Process Mining Findings
+The project explores how customer service cases flow through the organization — how long they take, where they get stuck, and how agent workload and topic complexity shape performance.  
+It includes both an **as-is assessment** and a proposed **to-be process**.
+
+### Key Objectives
+- Mapping the **current "as-is" workflow** using event logs  
+- Identifying inefficiencies, bottlenecks, and performance variation
+- Analysing agent workload, throughput times, and case complexity
+- Designing a future **AI-assisted "to-be" workflow**
+- Providing recommendations across process, structure, and technology
+
+The dataset contains anonymized event logs with three core activities: **Email**, **Interaction**, and **End**.  
+To ensure the analysis reflects a typical customer service workflow, the dataset was **filtered to exclude weeks 11–17 of 2020**, which corresponded to the peak COVID-19 lockdown. During this period, customer behavior and internal operations changed significantly, and including it would distort the picture of a standard process.
+
+*Illustration of the distorted data (unfiltered)*
+
+<img width="650" alt="image" src="https://github.com/user-attachments/assets/fb9771fc-4a14-48ad-826c-ccc20257268e" />
+
+
+### Activity Duration Overview (Filtered Data)
+
+| **Activity**   | **Events** | **Avg. Duration** | **Max Duration** |
+|----------------|------------|-------------------|------------------|
+| Email          | 1 594      | 10.37             | 558.2            |
+| Interactions   | 905        | 9.95              | 118.13           |
+| END            | 640        | 8.75              | 48.5             |
+
+
+---
+
+## Key Insights
+
 - **30.9% of cases** exceeded the 100-hour SLA threshold  
 - **67 unique process variants**, indicating high inconsistency  
-- Emails showed extreme duration variation (max **558 hours**)  
+- Email cases showed extreme duration variation (max **558 hours**)  
 - Significant workload imbalance across agents  
-- Certain case topics (esp. **9** and **10**) were far more complex  
-- Process capability charts revealed **17 outliers** and **62 pattern breaches**  
+- Certain case topics (esp. **9** and **10**) were significantly more complex  
+- Process capability analysis revealed **17 outliers** and **62 pattern breaches**
 
-## 🗺️ 3. Selected Project Visualizations
+Insights pointed toward uneven resource allocation, incomplete documentation, high-complexity case bottlenecks, and significant time gaps between activities.
+
+## Selected Project Visualizations
 
 ### **As-Is Process Map**  
 A full representation of all activities and transitions in the customer service workflow.  
@@ -48,11 +65,10 @@ Shows the current customer journey from incident reporting to case closure, incl
 
 ---
 
-### **Variant Analysis – Distribution of Variants**  
+### **Variant Analysis**  
 Illustrates the high variability across 67 process paths.  
 <img width="650" alt="Variant Distribution" src="https://github.com/user-attachments/assets/007ce035-631f-4538-9b2e-ecbd7b09b243" />
-
-### **Variant Analysis – Trace Frequency**  
+ 
 Displays the most common case pathways, covering ~60 percent of all cases.  
 <img width="650" alt="Trace Frequency" src="https://github.com/user-attachments/assets/103d9167-3659-4620-b3d9-60a76df51b77" />
 
@@ -82,65 +98,51 @@ Shows that ~21 percent of cases exceed the 100-hour SLA.
 
 ---
 
-### **To-Be BPMN Model**  
+## Methods & Tools
+
+### Process Mining in R
+Packages used includes:
+`bupaR`, `edeaR`, `processmapR`, `qcc`, `tidyverse`, `bupaverse`, `scales`
+
+*Note:* The original R scripts used in the analysis are not included in this repository. The full analytical workflow is documented in the [**project report**](report/Telecom_process_improvement.pdf).
+
+Key analytical steps:
+- Event log creation & preprocessing  
+- Process maps & variant analysis  
+- Throughput & SLA assessment  
+- Workload & case complexity analysis  
+- Statistical control & capability evaluation    
+
+### BPMN Modeling
+Two BPMN models were created:
+- **As-Is model:** current workflow, bottlenecks, and inefficiencies  
+- **To-Be model:** redesigned, recommended AI-supported workflow  
+
+---
+
+## Proposed AI-Driven Redesign (To-Be)
+
+The proposed redesign integrates Salesforce Einstein AI to improve process flow, consistency and workload balance:
+
+1. **Automatic Case Classification & Routing:** Predicts case type and assigns it to the optimal agent.
+2. **Mandatory Document Submission:** Ensures complete case information at the start.
+3. **Predictive Workload Distribution:** Balances workload and avoids overloading key agents.
+4. **Specialized Agent Training:** Ensures agents can handle complex case types more efficiently.
+5. **Automated Communication:** Automated updates, sentiment analysis and simple-case resolution.
+
+### To-Be BPMN Model 
 Illustrates AI-assisted classification, mandatory documentation, predictive routing and automated updates.  
 <img width="650" alt="To-Be BPMN Model" src="https://github.com/user-attachments/assets/944140f8-f90a-4944-9054-fe5aac988e24" /> 
 
----
-
-## ⚙️ 4. Methods & Tools
-
-### 🔵 Process Mining in R
-Libraries used:
-- `bupaR`
-- `edeaR`
-- `processmapR`
-- `qcc`
-- `tidyverse`
-
-Key analytical steps:
-- Event log creation and cleaning  
-- Process map generation  
-- Variant and trace frequency analysis  
-- Throughput and SLA evaluation  
-- Resource and agent workload analysis  
-- Control chart creation  
-- Complexity scoring by topic    
-
-### 🟣 BPMN Modeling
-Two models were created:
-- **As-Is model:** current workflow and bottlenecks  
-- **To-Be model:** redesigned AI-enabled process  
 
 ---
 
-## 🤖 5. Proposed AI-Driven Redesign
-
-The new process design integrates Salesforce Einstein AI to support:
-
-### 1. Automatic Case Classification & Routing  
-Predicts case type and assigns it to the optimal agent.
-
-### 2. Mandatory Document Submission  
-Ensures complete case information at the start.
-
-### 3. Predictive Workload Distribution  
-Balances workload and avoids overloading key agents.
-
-### 4. Specialized Agent Training  
-Ensures agents can handle complex case types more efficiently.
-
-### 5. AI-Driven Communication  
-Automated updates, sentiment analysis and simple-case resolution.
-
----
-
-## 📈 6. Implementation Strategy
+## Recommended Implementation Strategy
 
 The project includes recommendations for:
 
-- **Agile implementation methodology**  
-- **Governance structure** with RACI and BPM standards  
-- **8-month project timeline**  
+- **Agile implementation approach**  
+- **Governance structure** (RACI, BPM standards)  
+- **8-month project timeline** with Gantt-chart 
 - **Risk analysis** (technical, organizational and ethical)  
-- **Change management and user adoption strategies**  
+- **Change management & user adoption strategies**  
